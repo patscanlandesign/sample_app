@@ -305,18 +305,36 @@ describe UsersController do
 		end
 		
 		describe "as a non-admin user" do
+			it "should not display the delete links in users index page" do
+				test_sign_in(@user)
+				get :index
+				response.should_not have_selector("a", :content => "delete")
+			end
+			
 			it "should protect the page" do
 				test_sign_in(@user)
 				delete :destroy, :id => @user
 				response.should redirect_to(root_path)
-			end
+			end	
 		end
 		
 		describe "as an admin user" do
 		
 			before(:each) do
-				admin = Factory(:user, :email => "admin@example.com", :admin => true)
-				test_sign_in(admin)
+				@admin = Factory(:user, :email => "admin@example.com", :admin => true)
+				test_sign_in(@admin)
+			end
+			
+			it "should display the delete links on users index page" do
+				get :index
+				response.should have_selector("a", :content => "delete")
+			end
+			
+			it "should not allow an admin to delete themselves" do
+				lambda do
+					delete :destroy, :id => @admin
+					response.should redirect_to(users_path)
+				end.should_not change(User, :count)
 			end
 			
 			it "should destroy the user" do
