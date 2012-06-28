@@ -250,4 +250,9 @@ form.new_micropost textarea {
   margin-bottom: 0;
 }
 
+/* The character counter from 140 for microposts. */
 
+div.char_count {
+  margin-top: -1em;
+	font-weight: bold;
+}
