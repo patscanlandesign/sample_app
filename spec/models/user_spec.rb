@@ -85,6 +85,13 @@ describe User do
 		end
 	end	
 	
+	describe "username validations" do
+		it "should require a username" do
+			blank_username = User.new(@attr.merge(:username => ""))
+			blank_username.should_not be_valid
+		end
+	end
+	
 	describe "password encryption" do
 		
 		before(:each) do
