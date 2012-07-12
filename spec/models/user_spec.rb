@@ -87,8 +87,13 @@ describe User do
 	
 	describe "username validations" do
 		it "should require a username" do
-			blank_username = User.new(@attr.merge(:username => ""))
-			blank_username.should_not be_valid
+			blank_username_user = User.new(@attr.merge(:username => ""))
+			blank_username_user.should_not be_valid
+		end
+		
+		it "should reject long usernames" do
+			long_username_user = User.new(@attr.merge(:username => "ABCDEFGHIJKLMNOP"))
+			long_username_user.should_not be_valid
 		end
 	end
 	
