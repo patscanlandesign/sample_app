@@ -95,6 +95,21 @@ describe User do
 			long_username_user = User.new(@attr.merge(:username => "ABCDEFGHIJKLMNOP"))
 			long_username_user.should_not be_valid
 		end
+		
+		it "should reject duplicate usernames" do
+			User.create!(@attr)
+			duplicate_un_user = User.new(@attr.merge(:email => "bob@bob.com"))
+			# the duplicate user has a different email, so would be valid if we didn't require unique usernames
+			duplicate_un_user.should_not be_valid
+		end
+		
+		it "should reject usernames different only by upper-/lower- case" do
+			upcased_un = @attr[:username].upcase
+			User.create!(@attr)
+			close_un_user = User.new(@attr.merge(:email => "joe@joe.com", :username => upcased_un))
+			# close_un_user needs a different email address to pass validation at all
+			close_un_user.should_not be_valid
+		end
 	end
 	
 	describe "password encryption" do
