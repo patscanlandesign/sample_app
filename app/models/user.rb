@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
 	
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	
+	username_regex = /\A(\w+)$/
+		
 	validates :name,  :presence   => true,
 										:length     => { :maximum => 50 }
 										
@@ -26,7 +28,10 @@ class User < ActiveRecord::Base
                        :confirmation => true,
                        :length       => { :within => 6..40 }
 											 
-	validates :username, :length     => { :maximum => 15 }
+	validates :username, :presence	 => true,
+											 :length     => { :maximum => 15 },
+											 :format		 => { :with => username_regex },
+											 :uniqueness => { :case_sensitive => false }
 		
 	before_save :encrypt_password
 	
