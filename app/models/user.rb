@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 	attr_accessor :password
-	attr_accessible :name, :email, :password, :password_confirmation
+	attr_accessible :name, :email, :password, :password_confirmation, :username
 	
 	has_many :microposts, :dependent => :destroy
 	has_many :relationships,:foreign_key => "follower_id",
@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 	
 	validates :name,  :presence   => true,
 										:length     => { :maximum => 50 }
+										
 	validates :email, :presence   => true,
 										:format     => { :with => email_regex },
 										:uniqueness => { :case_sensitive => false }
@@ -24,7 +25,9 @@ class User < ActiveRecord::Base
   validates :password, :presence     => true,
                        :confirmation => true,
                        :length       => { :within => 6..40 }
-	
+											 
+	validates :username, :length     => { :maximum => 15 }
+		
 	before_save :encrypt_password
 	
 	# Return true if the user's password matches the submitted password.
