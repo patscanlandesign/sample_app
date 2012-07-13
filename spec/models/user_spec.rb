@@ -110,6 +110,14 @@ describe User do
 			# close_un_user needs a different email address to pass validation at all
 			close_un_user.should_not be_valid
 		end
+		
+		it "should reject invalid usernames" do
+			bad_usernames = %w[!@#$man frisko.kid _-guy]
+			bad_usernames.each do |bad_username|
+				bad_username_user = User.new(@attr.merge(:username => bad_username))
+				bad_username_user.should_not be_valid
+			end
+		end
 	end
 	
 	describe "password encryption" do
