@@ -11,6 +11,7 @@ describe "Users" do
 					visit signup_path
 					fill_in "Name",						:with => ""
 					fill_in "Email",					:with => ""
+					fill_in "Username",				:with => ""
 					fill_in "Password",				:with => ""
 					fill_in "Confirmation",		:with => ""
 					click_button
@@ -27,6 +28,7 @@ describe "Users" do
 					visit signup_path
 					fill_in "Name",						:with => "Example User"
 					fill_in "Email",					:with => "user@example.com"
+					fill_in "Username",				:with => "username"
 					fill_in "Password",				:with => "foobar"
 					fill_in "Confirmation",		:with => "foobar"
 					click_button
