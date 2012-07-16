@@ -41,7 +41,7 @@ describe UsersController do
 			it "should have an element for each user" do
 				get :index
 				@users[0..2].each do |user|
-					response.should have_selector("li", :content => user.name)
+					response.should have_selector("li", :content => user.username)
 				end
 			end
 			
@@ -75,12 +75,12 @@ describe UsersController do
 			
 		it "should have the right title" do
 			get :show, :id => @user
-			response.should have_selector("title", :content => @user.name)
+			response.should have_selector("title", :content => @user.username)
 		end
 		
 		it "should include the user's name" do
 			get :show, :id => @user
-			response.should have_selector("h1", :content => @user.name)
+			response.should have_selector("h1", :content => @user.username)
 		end
 		
 		it "should have a profile image" do
@@ -386,13 +386,13 @@ describe UsersController do
       it "should show user following" do
         get :following, :id => @user
         response.should have_selector("a", :href => user_path(@other_user),
-                                           :content => @other_user.name)
+                                           :content => @other_user.username)
       end
 
       it "should show user followers" do
         get :followers, :id => @other_user
         response.should have_selector("a", :href => user_path(@user),
-                                           :content => @user.name)
+                                           :content => @user.username)
       end
     end
   end
